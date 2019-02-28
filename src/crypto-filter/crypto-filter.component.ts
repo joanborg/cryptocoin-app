@@ -12,9 +12,15 @@ export class CryptoFilterComponent {
   @Output() public filteredCryptosEvent = new EventEmitter<CryptoCurrency[]>();
   @Output() public priceUnitEvent = new EventEmitter<string>();
   public filteredCryptos: CryptoCurrency[];
-  public percentChange: string ='All';
+  public percentChange: string = 'All';
   public showAmount: number = 100;
   public priceUnit: string = 'USD';
+
+  ngOnInit() {
+    this.filteredCryptos = this.cryptos;
+  }
+
+
 
   public filterCryptos(): void {
     this.percentChangeFilter();
@@ -25,23 +31,21 @@ export class CryptoFilterComponent {
     this.filteredCryptosEvent.emit(this.filteredCryptos);
   }
 
-public priceEvent(): void {
-  this.priceUnitEvent.emit(this.priceUnit);
-}
+  public priceEvent(): void {
+    this.priceUnitEvent.emit(this.priceUnit);
+  }
 
-public ngOnInit() {
-  this.filteredCryptos = this.cryptos;
-}
+
   public percentChangeFilter(): void {
     this.filteredCryptos = this.cryptos.filter((crypto: CryptoCurrency) => {
-      if(this.percentChange === 'Positive') { 
+      if (this.percentChange === 'Positive') {
         return crypto.percent_change_24h >= 0;
       } else if (this.percentChange === 'Negative') {
         return crypto.percent_change_24h < 0;
       }
       return crypto;
     });
-    
+
   }
 
   public showOnlyFilter(): void {
